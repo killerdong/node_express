@@ -9,18 +9,11 @@ const errorLogger = msg => logger(msg, 'error');
 const analyzeError = error => errorLogger(error);
 const errorlog = error => errorLogger(error);
 
-const middlewareTemplate = (func = () => {}, filter = () => true) => (req, res, next) => {
-    if (filter(req, res)) {
-        func();
-    }
+const every = (req, res, next) => logger('every');
+const everyPost = (req, res, next) => logger('every post');
 
-    next();
-};
-
-const every = middlewareTemplate(() => logger('every'));
-const everyPost = middlewareTemplate(() => logger('every post'), (req, res) => req.method === 'POST');
-
-app.use(every, everyPost);
+app.use(every);
+app.post('/*', everyPost);
 
 app.get('/users', (req, res) => {
     const users = {users: ['sdw1211', 'killerdong']};
