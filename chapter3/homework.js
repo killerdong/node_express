@@ -53,6 +53,7 @@ const errorHandler1 = (err, req, res, next) => {
 
 const errorHandler2 = (err, req, res, next) => {
     errorlog(err);
+    res.status(500);
     res.json({msg: err.message});
 };
 
